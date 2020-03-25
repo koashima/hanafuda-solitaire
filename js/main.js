@@ -22,7 +22,9 @@ class Deck {
             i = Math.floor(Math.random() * m--);
             [deck[m], deck [i]] = [deck[i], deck[m]];
         }
+        return deck;
     }
+
 }
 
 const deck = new Deck;
@@ -52,38 +54,23 @@ function init() {
 
 createBoard();
 
-function createBoard(){
-    // board array
-    board = [
-        null, null, null, null,
-        null, null, null, null,
-        null, null, null, null,
-        null, null, null, null, 
-        null, null, null, null, 
-        null, null, null, null, 
-        null, null, null, null, 
-        null, null, null, null, 
-        null, null, null, null, 
-        null, null, null, null, 
-        null, null, null, null, 
-        null, null, null, null];
 
-    // shuffle card deck (do this before or after?)
+function createBoard(){
+  
+    // shuffle card deck
+    let sDeck = deck.shuffle();
+    // take hand out of shuffled deck
+    hand = sDeck.splice(0, 4);
+    board = sDeck
     for(i = 0; i < 48; i++){
         const card = document.createElement('div');
         card.classList.add("card");
         // make inner html the number
         card.innerHTML = deck.deck[i];
-        // card.innerHTML = i; (deck[i].value)
         gameBoard.appendChild(card);
     }
+    console.log(board)
 }
-
-function shuffle(){
-
-}
-
-
 
 function swap(){ 
 
