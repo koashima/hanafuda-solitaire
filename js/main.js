@@ -12,9 +12,17 @@ class Deck {
                 this.deck.push(`${suits[suit]} ${values[value]}`);
             }
         }
-
     }
+    shuffle() {
+        const deck = this.deck;
+        let m = deck.length;
+        let i;
 
+        while (m) {
+            i = Math.floor(Math.random() * m--);
+            [deck[m], deck [i]] = [deck[i], deck[m]];
+        }
+    }
 }
 
 const deck = new Deck;
