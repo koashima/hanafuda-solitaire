@@ -39,6 +39,11 @@ main {
     "hand bomb";
 }
 
+img { 
+    height: 100px;
+    width: 50px;
+}
+
 .board { 
     grid-area: board;
     display: grid;
