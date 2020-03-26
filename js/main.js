@@ -1,5 +1,4 @@
 /*----- constants -----*/
-
 class Deck { 
     constructor(){
         this.deck = [];
@@ -48,7 +47,6 @@ let handStack = document.querySelector('.hand-stack')
 /*----- functions -----*/
 
 
-
 createBoard();
 
 createHandStack();
@@ -74,13 +72,6 @@ function swap(){
 
 }
 
-function init() {
-
-}
-
-function render(){ 
-
-}
 
 function createHandStack(){
     for(i = 0; i < 4; i++){
@@ -95,6 +86,22 @@ function createHandStack(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+function init() {
+}
+
+function render(){ 
+}
 // handArr.forEach( hand => {
 //     let handCard =  document.createElement('div');
 //     handCard.classList.add('card');
