@@ -32,15 +32,14 @@ const deck = new Deck;
 /*----- app's state (variables) -----*/
 
 let board = []
-let hand = []
 
 let bombStack = []
 
 /*----- cached element references -----*/
 
+let gameBoard = document.querySelector('.board');
 
-
-const gameBoard = document.querySelector('.board');
+let handStack = document.querySelector('.hand-stack')
 
 /*----- event listeners -----*/
 
@@ -48,42 +47,57 @@ const gameBoard = document.querySelector('.board');
 
 /*----- functions -----*/
 
-function init() {
 
-}
 
 createBoard();
 
+createHandStack();
 
 function createBoard(){
   
     // shuffle card deck
     let sDeck = deck.shuffle();
     // take hand out of shuffled deck
-    hand = sDeck.splice(0, 4);
-    board = sDeck
-    for(i = 0; i < 48; i++){
+    handArr = sDeck.splice(0, 4);
+    // set board to store the shuffled deck
+    board = sDeck;
+    for(i = 0; i < 44; i++){
         const card = document.createElement('div');
         card.classList.add("card");
         // make inner html the number
-        card.innerHTML = deck.deck[i];
+        card.innerHTML = sDeck[i];
         gameBoard.appendChild(card);
     }
-    console.log(board)
 }
 
 function swap(){ 
 
 }
 
+function init() {
 
-
-
-
-
-
-
+}
 
 function render(){ 
 
 }
+
+function createHandStack(){
+    for(i = 0; i < 4; i++){
+        let handCard = document.createElement('div');
+        handCard.classList.add('card');
+        handCard.innerHTML = handArr[i];
+        handStack.appendChild(handCard);
+    }
+}
+
+
+
+
+
+// handArr.forEach( hand => {
+//     let handCard =  document.createElement('div');
+//     handCard.classList.add('card');
+//     handStack.appendChild(handCard);
+    
+// });
