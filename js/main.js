@@ -4,11 +4,11 @@ class Deck {
         this.deck = [];
 
         const suits = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-        const values = [1, 2, 3, 4];
+        const values = [0, 1, 2, 3];
 
         for(let suit in suits) { 
             for(let value in values) { 
-                this.deck.push(`${suits[suit]} ${values[value]}`);
+                this.deck.push({0: `${suits[suit]}${values[value]}`, img: `assets/${suits[suit]}${values[value]}.jpg`});
             }
         }
     }
@@ -47,14 +47,23 @@ let handStack = document.querySelector('.hand-stack')
 /*----- event listeners -----*/
 
 /*----- functions -----*/
+init();
 
 
-createBoard();
-
-createHandStack();
-
+function drawBoard(){
+    gameBoard.innerHTML = "";
+    handStack.innerHTML = "";
+    for(i = 0; i < 44; i++){
+        const card = document.createElement('div');
+        card.classList.add("card");
+        // make inner html the number
+        card.innerHTML= board[i][0];
+        gameBoard.appendChild(card);
+        card.addEventListener('click', swapCard);
+    }
+    createHandStack();
+}
 function createBoard(){
-  
     // shuffle card deck
     let sDeck = deck.shuffle();
     // take hand out of shuffled deck 
@@ -66,18 +75,17 @@ function createBoard(){
         const card = document.createElement('div');
         card.classList.add("card");
         // make inner html the number
-        card.innerHTML= board[i];
+        card.innerHTML= board[i][0];
         gameBoard.appendChild(card);
         card.addEventListener('click', swapCard);
     }
-    
 }
 
 function createHandStack(){
     for(i = 0; i < 4; i++){
         let handCard = document.createElement('div');
         handCard.classList.add('card');
-        handCard.innerHTML = handArr[i];
+        handCard.innerHTML = handArr[i][0];
         handStack.appendChild(handCard);
     }
 }
@@ -85,32 +93,22 @@ function createHandStack(){
 
 function swapCard(e){ 
     for(let i = 0; i < board.length; i++){
-        if(board[i] == e.target.innerHTML){
+        if(board[i][0] == e.target.innerHTML){
+            // takes clicked card and moves it to the end of handArr and puts the first
+            // card in handArr and puts it where clicked card was.
             [board[i], board[i]] = [handArr.push(board[i]), handArr.shift()];
         }
     }
+    drawBoard();
 }
 
 
 function init() {
+    createBoard();
+    createHandStack();
 }
 
 function render(){ 
-
+    // win or lose messages
 }
 
-
-
-
-// handArr.forEach( hand => {
-//     let handCard =  document.createElement('div');
-//     handCard.classList.add('card');
-//     handStack.appendChild(handCard);   
-// });
-
-
-// let targetInd =  e.target.innerHTML;
-//     const isEqual = function(element){ 
-//         element == e.target.innerHTML;
-//     }
-//     console.log(board.findIndex(isEqual));
