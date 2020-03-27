@@ -28,11 +28,13 @@ class Deck {
 
 const deck = new Deck;
 
+const wildCard = 'nov';
+
 /*----- app's state (variables) -----*/
 
 let board = []
 
-let bombStack = []
+let wildArr = []
 
 let handArr = []
 
@@ -40,8 +42,9 @@ let handArr = []
 
 let gameBoard = document.querySelector('.board');
 
-let handStack = document.querySelector('.hand-stack')
+let handStack = document.querySelector('.hand-stack');
 
+let endGameMessage = document.querySelector('.message');
 
 
 /*----- event listeners -----*/
@@ -53,7 +56,8 @@ init();
 function drawBoard(){
     gameBoard.innerHTML = "";
     handStack.innerHTML = "";
-    for(i = 0; i < 44; i++){
+    //let filteredBoard = board.filter((element)=> element.kind !== "nov");
+    for(i = 0; i < board.length; i++){
         const card = document.createElement('div');
         card.classList.add("card");
         // make inner html the number
@@ -75,6 +79,7 @@ function createBoard(){
         const card = document.createElement('div');
         card.classList.add("card");
         // make inner html the number
+        // card.innerHTML= board[i][0];
         card.innerHTML= board[i][0];
         gameBoard.appendChild(card);
         card.addEventListener('click', swapCard);
@@ -93,22 +98,75 @@ function createHandStack(){
 
 function swapCard(e){ 
     for(let i = 0; i < board.length; i++){
-        if(board[i][0] == e.target.innerHTML){
+        if(board[i][0] == e.target.innerHTML){ 
             // takes clicked card and moves it to the end of handArr and puts the first
             // card in handArr and puts it where clicked card was.
             [board[i], board[i]] = [handArr.push(board[i]), handArr.shift()];
+            
         }
     }
+    // if clicked item is wildCard put in wildArr
     drawBoard();
 }
 
+const checkForWin = () => {
+    let matchedCols = 0;
+    for (let i = 0; i < 44; i += 4) {
+        let currentColumnStreak = 0;
+        let lastSeen = null;
+        for (let x = i; x < 44; x++) {
+             if (lastSeen === null) {
+                lastSeen = board[x];
+                console.log(board[x]);
+                currentColumnStreak++;
+             } else if (lastSeen === board[x]){
+                currentColumnStreak++;
+                if (currentColumnStreak === 4) matchedCols++;
+             } else {
+                currentColumnStreak = 0;
+             }
+        }
+    }
+    if (matchedCols === 11) endGameMessage.innerHTML = `you won`;
+}
 
+checkForWin()
 function init() {
     createBoard();
     createHandStack();
 }
 
+
+// function removeNov(){ 
+//     bombStack = handArr.filter(function(el){
+//         el.
+//     });
+// }
 function render(){ 
-    // win or lose messages
+   
 }
 
+
+//card.innerHTML= `<img src="${board[i].img}">`;
+
+// const checkForWin = () => {
+//     let matchedCols = 0;
+//     for (let i = 0; i < 44; i += 3) {
+//         let currentColumnStreak = 0;
+//         let lastSeen = null;
+//         for (let x = i; x < 44; x++) {
+//              if (lastSeen === null) {
+//                 lastSeen = board[x];
+//                 currentColumnStreak++;
+//              } else if (lastSeen === board[x]){
+//                 currentColumnStreak++;
+//                 if (currentColumnStreak === 4) matchedCols++;
+//              } else {
+//                 currentColumnStreak = 0;
+//              }
+         
+//         }
+//     }
+
+//     if (matchedCols === 11) return true;
+// }
